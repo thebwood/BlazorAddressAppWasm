@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlazorAddressAppWasm.ClassLibrary\BlazorAddressAppWasm.ClassLibrary.csproj" />
     <ProjectReference Include="..\BlazorAddressAppWasm.Client\BlazorAddressAppWasm.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.1" />
   </ItemGroup>
