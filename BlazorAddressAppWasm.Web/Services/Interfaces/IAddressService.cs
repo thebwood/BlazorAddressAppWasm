@@ -1,4 +1,5 @@
-﻿using BlazorAddressAppWasm.ClassLibrary.DTOs;
+﻿using BlazorAddressAppWasm.ClassLibrary.Classes;
+using BlazorAddressAppWasm.ClassLibrary.DTOs;
 
 namespace BlazorAddressAppWasm.Web.Services.Interfaces
 {
@@ -8,9 +9,9 @@ namespace BlazorAddressAppWasm.Web.Services.Interfaces
         Task<List<AddressDTO>> GetAddresses();  
         Task<AddressDTO> GetAddress(Guid id);
 
-        Task<AddressDTO> AddAddress(AddressDTO addressDTO);
+        Task<Result> AddAddress(AddressDTO addressDTO);
 
-        Task UpdateAddress(AddressDTO addressDTO);
-        Task DeleteAddress(Guid id);
+        Task<Result> UpdateAddress(AddressDTO addressDTO);
+        Task<Result> DeleteAddress(Guid id);
     }
 }

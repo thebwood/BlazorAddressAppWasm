@@ -1,4 +1,5 @@
 ﻿
+using BlazorAddressAppWasm.ClassLibrary.Classes;
 using BlazorAddressAppWasm.ClassLibrary.DTOs;
 using BlazorAddressAppWasm.Web.Services.Interfaces;
 using System.Net.Http.Json;
@@ -25,9 +26,9 @@ namespace BlazorAddressAppWasm.Web.Services
 
         public async Task<AddressDTO> GetAddress(Guid id) => await _httpClient.GetFromJsonAsync<AddressDTO>($"api/addresses/{id}");
 
-        public async Task<ResultDTO> AddAddress(AddressDTO addressDTO)
+        public async Task<Result> AddAddress(AddressDTO addressDTO)
         {
-            ResultDTO resultDTO = new ResultDTO();
+            Result resultDTO = new Result();
             StringContent? content = new StringContent(JsonSerializer.Serialize(addressDTO), Encoding.UTF8, "application/json");
             using HttpResponseMessage? response = await _httpClient.PostAsync("api/addresses", content);
 
@@ -35,9 +36,9 @@ namespace BlazorAddressAppWasm.Web.Services
             return resultDTO;
         }
 
-        public async Task<ResultDTO> UpdateAddress(AddressDTO addressDTO)
+        public async Task<Result> UpdateAddress(AddressDTO addressDTO)
         {
-            ResultDTO resultDTO = new ResultDTO();
+            Result resultDTO = new Result();
             StringContent? content = new StringContent(JsonSerializer.Serialize(addressDTO), Encoding.UTF8, "application/json");
             //using HttpResponseMessage? response = await _httpClient.PutAsync("api/addresses", content);
             using HttpResponseMessage? response = await _httpClient.PutAsync("api/addresses", content);
@@ -45,9 +46,9 @@ namespace BlazorAddressAppWasm.Web.Services
             return resultDTO;
         }
 
-        public async Task<ResultDTO> DeleteAddress(Guid id)
+        public async Task<Result> DeleteAddress(Guid id)
         {
-            ResultDTO resultDTO = new ResultDTO();
+            Result resultDTO = new Result();
 
 
             using HttpResponseMessage? response = await _httpClient.DeleteAsync("api/addresses" + id);
