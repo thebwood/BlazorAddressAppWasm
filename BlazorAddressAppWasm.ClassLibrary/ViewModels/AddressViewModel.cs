@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlazorAddressAppWasm.ClassLibrary.DTOs
+﻿namespace BlazorAddressAppWasm.ClassLibrary.ViewModels
 {
-    public class AddressDTO
+    public class AddressViewModel
     {
         public Guid Id { get; set; }
         public string StreetAddress { get; set; }
         public string StreetAddress2 { get; set; }
         public string City { get; set; }
-        public int StateId { get; set; }
+        public int State { get; set; }
         public string PostalCode { get; set; }
+
     }
 }

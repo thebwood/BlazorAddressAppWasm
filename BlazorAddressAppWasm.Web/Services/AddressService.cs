@@ -22,11 +22,11 @@ namespace BlazorAddressAppWasm.Web.Services
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 
-        public async Task<List<AddressDTO>> GetAddresses() => await _httpClient.GetFromJsonAsync<List<AddressDTO>>("api/addresses");
+        public async Task<GetAddressesResponseDTO> GetAddresses() => await _httpClient.GetFromJsonAsync<GetAddressesResponseDTO>("api/addresses");
 
-        public async Task<AddressDTO> GetAddress(Guid id) => await _httpClient.GetFromJsonAsync<AddressDTO>($"api/addresses/{id}");
+        public async Task<GetAddressResponseDTO> GetAddress(Guid id) => await _httpClient.GetFromJsonAsync<GetAddressResponseDTO>($"api/addresses/{id}");
 
-        public async Task<Result> AddAddress(AddressDTO addressDTO)
+        public async Task<Result> AddAddress(GetAddressResponseDTO addressDTO)
         {
             Result resultDTO = new Result();
             StringContent? content = new StringContent(JsonSerializer.Serialize(addressDTO), Encoding.UTF8, "application/json");
@@ -36,7 +36,7 @@ namespace BlazorAddressAppWasm.Web.Services
             return resultDTO;
         }
 
-        public async Task<Result> UpdateAddress(AddressDTO addressDTO)
+        public async Task<Result> UpdateAddress(GetAddressResponseDTO addressDTO)
         {
             Result resultDTO = new Result();
             StringContent? content = new StringContent(JsonSerializer.Serialize(addressDTO), Encoding.UTF8, "application/json");

@@ -1,0 +1,32 @@
+﻿@inherits CommonBase
+
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Street</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var address in _addressList)
+            {
+                <tr>
+                    <td>@address.StreetAddress</td>
+                    <td>@address.StreetAddress2</td>
+                    <td>@address.City</td>
+                    <td>@address.State</td>
+                    <td>@address.PostalCode</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditAddress(address.Id)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteAddress(address.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

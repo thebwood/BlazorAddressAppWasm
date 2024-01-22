@@ -1,6 +1,6 @@
-﻿using BlazorAddressAppWasm.Web.Services;
+﻿using BlazorAddressAppWasm.Web.ServiceManager;
+using BlazorAddressAppWasm.Web.Services;
 using BlazorAddressAppWasm.Web.Services.Interfaces;
-using BlazorAddressAppWasm.Web.StateManagement;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Retry;
@@ -20,7 +20,7 @@ namespace BlazorAddressAppWasm.Web
                 .AddPolicyHandler(retryPolicy);
 
 
-            services.AddScoped<AddressStateManager>();
+            services.AddScoped<AddressServiceManager>();
             return services;
         }
     }
