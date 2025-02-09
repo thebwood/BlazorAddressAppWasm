@@ -1,5 +1,5 @@
 ﻿using BlazorAddressAppWasm.Web.BaseClasses;
-using BlazorAddressAppWasm.Web.ServiceManager;
+using BlazorAddressAppWasm.Web.ViewModels;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorAddressAppWasm.Web.Pages.CreateAddress
@@ -8,7 +8,7 @@ namespace BlazorAddressAppWasm.Web.Pages.CreateAddress
     {
         [Inject]
 
-        private AddressServiceManager AddresServiceManager { get; set; }
+        private AddressViewModel AddressViewModel { get; set; }
 
     }
 }

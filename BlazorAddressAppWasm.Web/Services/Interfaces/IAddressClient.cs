@@ -1,17 +1,17 @@
-﻿using BlazorAddressAppWasm.ClassLibrary.Classes;
-using BlazorAddressAppWasm.ClassLibrary.DTOs;
+﻿using BlazorAddressAppWasm.ClassLibrary.DTOs;
+using BlazorAddressAppWasm.ClassLibrary.Models;
 
-namespace BlazorAddressAppWasm.Web.Services.Interfaces
+namespace BlazorAddressAppWasm.Web.ViewModels.Interfaces
 {
-    public interface IAddressService
+    public interface IAddressClient
     {
-
-        Task<GetAddressesResponseDTO> GetAddresses();  
+        Task<GetAddressesResponseDTO> GetAddresses();
         Task<GetAddressResponseDTO> GetAddress(Guid id);
 
         Task<Result> AddAddress(GetAddressResponseDTO addressDTO);
 
         Task<Result> UpdateAddress(GetAddressResponseDTO addressDTO);
         Task<Result> DeleteAddress(Guid id);
+
     }
 }

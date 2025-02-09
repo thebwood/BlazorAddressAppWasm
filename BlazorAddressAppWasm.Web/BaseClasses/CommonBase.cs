@@ -8,29 +8,6 @@ namespace BlazorAddressAppWasm.Web.BaseClasses
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        [Inject]
-        public JSRuntime JScript { get; set; }
-
-        public async void ConsoleLog(string message)
-        {
-            await JScript.InvokeVoidAsync("console.log", message);
-        }
-
-
-        public async void ConsoleError(string message)
-        {
-            await JScript.InvokeVoidAsync("console.error", message);
-        }
-
-        public async void ConsoleWarn(string message)
-        {
-            await JScript.InvokeVoidAsync("console.warn", message);
-        }
-
-        public async void ConsoleInfo(string message)
-        {
-            await JScript.InvokeVoidAsync("console.info", message);
-        }
 
     }
 }

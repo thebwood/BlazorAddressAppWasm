@@ -1,28 +1,30 @@
-﻿
-using BlazorAddressAppWasm.ClassLibrary.Classes;
-using BlazorAddressAppWasm.ClassLibrary.DTOs;
-using BlazorAddressAppWasm.Web.Services.Interfaces;
+﻿using BlazorAddressAppWasm.ClassLibrary.DTOs;
+using BlazorAddressAppWasm.ClassLibrary.Models;
+using BlazorAddressAppWasm.Web.ViewModels.Interfaces;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
+using System.Text;
 
-namespace BlazorAddressAppWasm.Web.Services
+namespace BlazorAddressAppWasm.Web.ViewModels
 {
-    public class AddressService : IAddressService
+    public class AddressClient : IAddressClient
     {
         private readonly HttpClient _httpClient;
-
         public IConfiguration _configuration { get; }
-        public AddressService(HttpClient httpClient, IConfiguration configuration)
+
+        public AddressClient(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-            _httpClient.BaseAddress = new Uri(_configuration["AddressApiUrl"]);
+            _httpClient.BaseAddress = new Uri("https://localhost:5001/");
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 
-        public async Task<GetAddressesResponseDTO> GetAddresses() => await _httpClient.GetFromJsonAsync<GetAddressesResponseDTO>("api/addresses");
+        public async Task<GetAddressesResponseDTO> GetAddresses()
+        {
+            return await _httpClient.GetFromJsonAsync<GetAddressesResponseDTO>("api/Addresses");
+        }
 
         public async Task<GetAddressResponseDTO> GetAddress(Guid id) => await _httpClient.GetFromJsonAsync<GetAddressResponseDTO>($"api/addresses/{id}");
 
@@ -56,5 +58,7 @@ namespace BlazorAddressAppWasm.Web.Services
             resultDTO.StatusCode = response.StatusCode;
             return resultDTO;
         }
+
+
     }
 }

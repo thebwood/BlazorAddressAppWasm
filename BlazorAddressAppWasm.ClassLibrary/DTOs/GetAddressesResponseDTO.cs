@@ -1,17 +1,17 @@
 ﻿
 
-using BlazorAddressAppWasm.ClassLibrary.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BlazorAddressAppWasm.ClassLibrary.Models;
 
 namespace BlazorAddressAppWasm.ClassLibrary.DTOs
 {
     public class GetAddressesResponseDTO
     {
-        public List<AddressViewModel> AddressList { get; set; }
+        public GetAddressesResponseDTO()
+        {
+            AddressList = new List<AddressDTO>();
+        }
+
+        public List<AddressDTO> AddressList { get; set; }
 
     }
 }

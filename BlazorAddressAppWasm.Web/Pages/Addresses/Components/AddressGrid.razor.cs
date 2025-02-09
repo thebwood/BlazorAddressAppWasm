@@ -1,52 +1,47 @@
-﻿
-
-using BlazorAddressAppWasm.ClassLibrary.ViewModels;
+﻿using BlazorAddressAppWasm.ClassLibrary.Models;
 using BlazorAddressAppWasm.Web.BaseClasses;
-using BlazorAddressAppWasm.Web.ServiceManager;
+using BlazorAddressAppWasm.Web.ViewModels;
 using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 
 
 namespace BlazorAddressAppWasm.Web.Pages.Addresses.Components
 {
     public partial class AddressGrid : CommonBase, IDisposable
     {
-        private List<AddressViewModel> _addressList { get; set; }
-
         [Parameter]
-        public AddressServiceManager AddressServiceManager { get; set; }
+        public AddressesViewModel AddressesViewModel { get; set; }
 
-        public AddressGrid()
+        private List<AddressModel> _addresses = new();
+        [Inject]
+        public ILogger<AddressGrid> Logger { get; set; }
+
+        protected override void OnInitialized()
         {
-            _addressList = new List<AddressViewModel>();
+
+            AddressesViewModel.AddressesLoaded += OnAddressesLoaded;
         }
 
-        private void OnAddressesLoaded(List<AddressViewModel> addressList)
+        private void OnAddressesLoaded(List<AddressModel> list)
         {
-            _addressList = addressList;
+            _addresses = list ?? new();
             StateHasChanged();
+        }
+
+        public void Dispose()
+        {
+            AddressesViewModel.AddressesLoaded -= OnAddressesLoaded;
         }
 
 
         public void EditAddress(Guid id)
         {
-            NavigationManager.NavigateTo($"/addressedit/{id}");
+            NavigationManager.NavigateTo($"/addresses/{id}");
         }
-
 
         public void DeleteAddress(Guid id)
         {
-
-        }
-
-        protected override void OnInitialized()
-        {
-            AddressServiceManager.AddressesLoaded += OnAddressesLoaded;
-        }
-
-
-        public void Dispose()
-        {
-            AddressServiceManager.AddressesLoaded -= OnAddressesLoaded;
+            // Implement delete functionality here
         }
     }
 }

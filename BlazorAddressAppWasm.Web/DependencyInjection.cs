@@ -1,6 +1,5 @@
-﻿using BlazorAddressAppWasm.Web.ServiceManager;
-using BlazorAddressAppWasm.Web.Services;
-using BlazorAddressAppWasm.Web.Services.Interfaces;
+﻿using BlazorAddressAppWasm.Web.ViewModels;
+using BlazorAddressAppWasm.Web.ViewModels.Interfaces;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Retry;
@@ -13,14 +12,19 @@ namespace BlazorAddressAppWasm.Web
         {
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
 
-            AsyncRetryPolicy<HttpResponseMessage> retryPolicy = HttpPolicyExtensions
-                .HandleTransientHttpError()
-                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-            services.AddHttpClient<IAddressService, AddressService>()
-                .AddPolicyHandler(retryPolicy);
+            AsyncRetryPolicy<HttpResponseMessage>? retryPolicy = HttpPolicyExtensions
+                .HandleTransientHttpError() // Handles 5xx and 408 errors
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(retryAttempt));
+
+            // Add HttpClient with retry policy
+            services.AddHttpClient<IAddressClient, AddressClient>()
+                .AddPolicyHandler(retryPolicy); // Attach the retry policy
 
 
-            services.AddScoped<AddressServiceManager>();
+            services.AddTransient<AddressesViewModel>();
+            services.AddTransient<AddressDetailViewModel>();
+
+
             return services;
         }
     }
