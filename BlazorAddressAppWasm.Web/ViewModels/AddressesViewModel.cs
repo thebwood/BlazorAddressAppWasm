@@ -1,7 +1,8 @@
-﻿using BlazorAddressAppWasm.ClassLibrary.DTOs;
+﻿using BlazorAddressAppWasm.ClassLibrary.Common;
+using BlazorAddressAppWasm.ClassLibrary.DTOs;
 using BlazorAddressAppWasm.ClassLibrary.Models;
 using BlazorAddressAppWasm.Web.ViewModels.Interfaces;
-
+using BlazorAddressAppWasm.Web.Mappers;
 namespace BlazorAddressAppWasm.Web.ViewModels
 {
     public class AddressesViewModel
@@ -15,31 +16,19 @@ namespace BlazorAddressAppWasm.Web.ViewModels
 
         public async Task GetAddresses()
         {
-            try
+            Result<GetAddressesResponseDTO> result = await _addressService.GetAddresses();
+            if (result.Success)
             {
-                GetAddressesResponseDTO response = await _addressService.GetAddresses();
-                List<AddressModel> addressViewModels = response.AddressList.Select(dto => MapToAddressModel(dto)).ToList();
+                List<AddressModel> addressViewModels = result.Value.AddressList.Select(dto => AddressMapper.MapToAddressModel(dto)).ToList();
                 OnAddressesLoaded(addressViewModels);
             }
-            catch (Exception ex)
+            else
             {
-                // Handle exceptions (e.g., log the error, show a message to the user, etc.)
-                Console.WriteLine($"Error fetching addresses: {ex.Message}");
+                // Handle errors (e.g., log the error, show a message to the user, etc.)
+                Console.WriteLine($"Error fetching addresses: {result.Message}");
             }
         }
 
-        private AddressModel MapToAddressModel(AddressDTO dto)
-        {
-            return new AddressModel
-            {
-                Id = dto.Id ?? Guid.Empty, // Handle nullable Guid
-                StreetAddress = dto.StreetAddress,
-                StreetAddress2 = dto.StreetAddress2,
-                City = dto.City,
-                State = dto.State,
-                PostalCode = dto.PostalCode
-            };
-        }
 
         public Action<List<AddressModel>>? AddressesLoaded;
 
